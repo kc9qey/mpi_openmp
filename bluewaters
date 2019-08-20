@@ -1,0 +1,110 @@
+# On Blue Waters
+# PrgEnv-cray enables OpenMP by default
+ cc -o cpi cpi.c
+ ftn -o cpif90 cpi.f90
+
+# optional , OpenACC 
+ cc -o cpi_acc cpi_acc.c  -hnoomp -hacc -hmsgs
+
+# MPI
+time OMP_NUM_THREADS=1 aprun -n 8 -d 2 cpi < input.txt
+# MPI and OpenMP
+time OMP_NUM_THREADS=2 aprun -n 4 -d 4 cpi < input.txt
+
+
+# gpu
+time aprun -n 1 cpi_acc < input.txt
+
+# MPI and gpu multiplexed
+time CRAY_CUDA_MPS=1 aprun -n 2 cpi_acc < input.txt
+
+# crowded MPI ( on adjacent integer cores )
+time OMP_NUM_THREADS=1 aprun -n 8 -cc 0-7 cpi < input.txt
+
+exit
+
+available: 4 nodes (0-3)
+node 0 cpus: 0 1 2 3 4 5 6 7
+node 0 size: 16383 MB
+node 0 free: 2158 MB
+node 1 cpus: 8 9 10 11 12 13 14 15
+node 1 size: 16384 MB
+node 1 free: 7670 MB
+node 2 cpus: 16 17 18 19 20 21 22 23
+node 2 size: 16384 MB
+node 2 free: 8473 MB
+node 3 cpus: 24 25 26 27 28 29 30 31
+node 3 size: 16384 MB
+node 3 free: 11416 MB
+node distances:
+node   0   1   2   3 
+  0:  10  13  13  13 
+  1:  13  10  13  13 
+  2:  13  13  10  13 
+  3:  13  13  13  10 
+  
+  
+[PE_0]: MPI rank order: Using default aprun rank ordering.
+[PE_0]: rank 0 is on nid16216
+[PE_0]: rank 1 is on nid16216
+[PE_0]: rank 2 is on nid16216
+[PE_0]: rank 3 is on nid16216
+[PE_0]: rank 4 is on nid16216
+[PE_0]: rank 5 is on nid16216
+[PE_0]: rank 6 is on nid16216
+[PE_0]: rank 7 is on nid16216
+Enter the number of intervals: (0 quits) 
+pi is approximately 3.1415926535898775, Error is 0.0000000000000844
+Enter the number of intervals: (0 quits) Application 79082346 resources: utime ~0s, stime ~1s, Rss ~8248, inblocks ~7832, outblocks ~18232
+
+real	0m3.413s
+user	0m1.572s
+sys	0m0.336s
+[PE_0]: MPI rank order: Using default aprun rank ordering.
+[PE_0]: rank 0 is on nid16216
+[PE_0]: rank 1 is on nid16216
+[PE_0]: rank 2 is on nid16216
+[PE_0]: rank 3 is on nid16216
+Enter the number of intervals: (0 quits) 
+pi is approximately 3.1415926535898775, Error is 0.0000000000000844
+Enter the number of intervals: (0 quits) Application 79082347 resources: utime ~0s, stime ~0s, Rss ~8248, inblocks ~7548, outblocks ~18232
+
+real	0m6.590s
+user	0m1.612s
+sys	0m0.308s
+[PE_0]: MPI rank order: Using default aprun rank ordering.
+[PE_0]: rank 0 is on nid16216
+Enter the number of intervals: (0 quits) 
+pi is approximately 3.1415926535898766, Error is 0.0000000000000835
+Enter the number of intervals: (0 quits) Application 79082348 resources: utime ~0s, stime ~1s, Rss ~94016, inblocks ~608, outblocks ~88
+
+real	0m5.528s
+user	0m4.384s
+sys	0m0.696s
+[PE_0]: MPI rank order: Using default aprun rank ordering.
+[PE_0]: rank 0 is on nid16216
+[PE_0]: rank 1 is on nid16216
+Enter the number of intervals: (0 quits) 
+pi is approximately 3.1415926535898766, Error is 0.0000000000000835
+Enter the number of intervals: (0 quits) Application 79082349 resources: utime ~0s, stime ~1s, Rss ~20524, inblocks ~1335, outblocks ~327
+
+real	0m6.327s
+user	0m4.372s
+sys	0m0.700s
+[PE_0]: MPI rank order: Using default aprun rank ordering.
+[PE_0]: rank 0 is on nid16216
+[PE_0]: rank 1 is on nid16216
+[PE_0]: rank 2 is on nid16216
+[PE_0]: rank 3 is on nid16216
+[PE_0]: rank 4 is on nid16216
+[PE_0]: rank 5 is on nid16216
+[PE_0]: rank 6 is on nid16216
+[PE_0]: rank 7 is on nid16216
+Enter the number of intervals: (0 quits) 
+pi is approximately 3.1415926535898775, Error is 0.0000000000000844
+Enter the number of intervals: (0 quits) Application 79082350 resources: utime ~0s, stime ~1s, Rss ~8248, inblocks ~7832, outblocks ~18232
+
+real	0m3.645s
+user	0m1.584s
+sys	0m0.320s
+
