@@ -1,0 +1,27 @@
+# stampede2 and impi/intel environment
+ mpicc -qopenmp -o stampede2/cpi cpi.c
+ mpif90 -qopenmp -o stampede2/cpif90 cpi.f90
+
+# idev for an interactive job, follow the prompts
+
+time ibrun cpi < ../input.txt
+time OMP_NUM_THREADS=4 ibrun cpi < ../input.txt
+
+TACC:  Starting up job 4199994 
+TACC:  Starting parallel tasks... 
+Enter the number of intervals: (0 quits) 
+pi is approximately 3.1415926535898753, Error is 0.0000000000000822
+Enter the number of intervals: (0 quits) TACC:  Shutdown complete. Exiting. 
+
+real	0m2.761s
+user	0m1.541s
+sys	0m4.641s
+TACC:  Starting up job 4199994 
+TACC:  Starting parallel tasks... 
+Enter the number of intervals: (0 quits) 
+pi is approximately 3.1415926535898766, Error is 0.0000000000000835
+Enter the number of intervals: (0 quits) TACC:  Shutdown complete. Exiting. 
+
+real	0m2.560s
+user	0m3.771s
+sys	0m4.341s
